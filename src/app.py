@@ -1,10 +1,18 @@
-from flask import Flask, request, Response
+from flask import Flask, request, redirect, url_for
 
 app = Flask(__name__)
 
 @app.route("/")
 def index():
 	return "<a href='/posts'>Posts</a>"
+
+@app.route("/response")	
+def get_response():
+	return "<h1>Server response</h1>"
+
+@app.route("/redirect")
+def _redirect():
+	return redirect(url_for("get_response")) #name of function, status code 302
 
 @app.route("/posts")
 @app.route("/posts/<int:id_>")
