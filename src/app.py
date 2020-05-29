@@ -21,6 +21,11 @@ def index():
 	users = User.query.all()
 	return render_template("users.html", users=users)
 
+@app.route("/users/<int:id_user>")
+def unique(id_user):
+	user = User.query.get(id_user)
+	return render_template("user.html", user=user)
+
 @app.route("/users/delete/<int:id_user>")
 def delete(id_user):
 	user = User.query.filter_by(id_user=id_user).first()

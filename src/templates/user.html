@@ -6,12 +6,14 @@
 	<title>Document</title>
 </head>
 <body>
-	<p>Users</p>
-	{% for user in users %}
-	<ul>
-		<li><a href="{{ url_for('unique', id_user=user.id_user) }}">{{ user.name }}</a></li>
-	</ul>
-	{% endfor %}
+
+	<p>
+		ID: {{ user.id_user }} <br>
+		Name: {{ user.name }} <br>
+		Email: {{ user.email }} <br><br>
+
+		<a href=" {{ url_for('delete', id_user=user.id_user) }} ">Deletar</a>
+	</p>
 	
 </body>
 </html>
