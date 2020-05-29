@@ -20,33 +20,10 @@ class Users(db.Model):
 def create_database():
     db.create_all()
 
-
 @app.route("/")
 def index():
-	return "<a href='/posts'>Posts</a>"
-
-@app.route("/response")	
-def get_response():
-	return render_template("response.html")
-
-@app.route("/redirect")
-def _redirect():
-	return redirect(url_for("get_response")) #name of function, status code 302
-
-@app.route("/posts")
-@app.route("/posts/<int:id_>")
-def posts(id_=None):
-	title = request.args.get("title")
-	data = {
-		"path": request.path,
-		"referrer": request.referrer,
-		"content_type": request.content_type,
-		"method": request.method,
-		"title": title,
-		"id_": id_
-	}
-	print(data)
-	return data	
+	users = Users.query.all()
+	return render_template("users.html", users=users)
 
 if __name__ == "__main__":
 	app.run(debug=True)
