@@ -2,6 +2,7 @@ from flask import Flask, redirect, url_for, render_template, request, flash
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager, UserMixin, login_required, login_user, logout_user
 from werkzeug.security import generate_password_hash, check_password_hash
+import time
 
 app = Flask(__name__)
 app.config["SECRET_KEY"] = "DontTellAnyone"
@@ -76,17 +77,16 @@ def login():
 		email = request.form.get("email")
 		user = User.query.filter_by(email=email).first()
 		if not user:
-			print("not user")
-			flash("user not found!")
+			flash("User not found!")
 			return redirect("")
 
 		password = request.form.get("password")
 		if not check_password_hash(user.password, password):
-			print("not pass")
-			flash("password incorrect!")
+			flash("Password incorrect!")
 			return redirect("")
 
 		login_user(user)
+		flash("Login successfully!")
 		return redirect(url_for('index'))
 
 	return render_template("login.html")	

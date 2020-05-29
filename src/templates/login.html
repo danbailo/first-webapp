@@ -13,6 +13,16 @@
 			<li>Email: <input type="email" name="email" placeholder="Email"></li>
 			<li>Password: <input type="password" name="password" placeholder="***"></li>
 		</ul>
+		
+		{% with messages = get_flashed_messages()%}
+			{% if messages %}
+				{% for message in messages %}
+					<p> {{ message }} </p>
+				{% endfor %}
+			{% endif %}
+
+
+		{% endwith %}
 		<input type="submit" value="Submit">
 	</form>
 	
