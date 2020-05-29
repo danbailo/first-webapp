@@ -1,4 +1,4 @@
-from flask import Flask, request, redirect, url_for
+from flask import Flask, request, redirect, url_for, render_template
 
 app = Flask(__name__)
 
@@ -8,7 +8,7 @@ def index():
 
 @app.route("/response")	
 def get_response():
-	return "<h1>Server response</h1>"
+	return render_template("response.html")
 
 @app.route("/redirect")
 def _redirect():
