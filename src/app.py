@@ -77,16 +77,16 @@ def login():
 		email = request.form.get("email")
 		user = User.query.filter_by(email=email).first()
 		if not user:
-			flash("User not found!")
+			flash("User not found!", "user_error")
 			return redirect("")
 
 		password = request.form.get("password")
 		if not check_password_hash(user.password, password):
-			flash("Password incorrect!")
+			flash("Password incorrect!", "password_error")
 			return redirect("")
 
 		login_user(user)
-		flash("Login successfully!")
+		flash("Login successfully!", "success")
 		return redirect(url_for('index'))
 
 	return render_template("login.html")	
