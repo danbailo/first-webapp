@@ -7,13 +7,15 @@
 </head>
 <body>
 	<p>Users</p>
-	<ul>
 	{% for user in users %}
-		<li>{{ user.id_user }}</li>
-		<li>{{ user.name }}</li>
-		<li>{{ user.email }}</li>
-	{% endfor %}
+	<ul>
+		<li>ID: {{ user.id_user }}</li>
+		<li>Name: {{ user.name }}</li>
+		<li>Email: {{ user.email }}</li>
+		<br>
+		<a href="{{ url_for('delete', id_user=user.id_user) }}">Deletar</a>
 	</ul>
+	{% endfor %}
 	
 </body>
 </html>

@@ -21,6 +21,13 @@ def index():
 	users = User.query.all()
 	return render_template("users.html", users=users)
 
+@app.route("/users/delete/<int:id_user>")
+def delete(id_user):
+	user = User.query.filter_by(id_user=id_user).first()
+	db.session.delete(user)
+	db.session.commit()
+	return redirect(url_for('index'))
+
 if __name__ == "__main__":
 	db.create_all()
 	app.run(debug=True)
