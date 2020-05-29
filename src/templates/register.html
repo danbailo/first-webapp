@@ -7,7 +7,7 @@
 </head>
 <body>
 
-	<form action="" method="POST">
+	<form action="{{ url_for('register', name=name, email=email, password=password) }}" method="POST">
 		<ul>
 			<li>Name: <input type="text" name="name" placeholder="Name"></li>
 			<li>Email: <input type="email" name="email" placeholder="Email"></li>
