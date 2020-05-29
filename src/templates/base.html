@@ -6,18 +6,17 @@
 	<title>Document</title>
 	<link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
 	<!-- url_for can be used to import static files -->
-	<style>
-
-		body{
-			padding: 10px 0px 0px 10px;
-		}
-
-	</style>
 </head>
 <body>
 
-	{% block body %}
-	{% endblock %}
+	<div class="container">
+		<div class="mx-auto pt-5" style="width: 500px;">
+	
+			{% block body %}
+			{% endblock %}
+	
+		</div>
+	</div>
 	
 </body>
 </html>
