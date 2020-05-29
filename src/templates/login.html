@@ -1,30 +1,60 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>Document</title>
-	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
-</head>
-<body>
+{% extends "base.html" %}
 
+{% block body %}
+
+
+	<form action="{{ url_for('login') }}" method="POST">
+		<div class="form-group">
+		<label for="exampleInputEmail1">Email address</label>
+		<input name="email" type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+		<small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+		</div>
+		<div class="form-group">
+		<label for="exampleInputPassword1">Password</label>
+		<input name="password" type="password" class="form-control" id="exampleInputPassword1">
+		</div>
+		<div class="form-group form-check">
+		<input type="checkbox" class="form-check-input" id="exampleCheck1">
+		<label class="form-check-label" for="exampleCheck1">Check me out</label>
+		</div>
+
+		{% with messages = get_flashed_messages(with_categories=true)%}
+			{% if messages %}
+				{% for category, message in messages %}
+					{% if category == "success" %}
+						<p class="alert alert-success" role="alert">{{ message }}</p>
+					{% elif category == "user_error" %}
+						<p class="alert alert-danger" role="alert">{{ message }}</p>
+					{% elif category == "password_error" %}
+						<p class="alert alert-warning" role="alert">{{ message }}</p>
+					{% endif %}
+				{% endfor %}
+			{% endif %}
+		{% endwith %}		
+		<button type="submit" class="btn btn-primary">Submit</button>
+	</form>
+
+<!-- 
 	<form action="{{ url_for('login') }}" method="POST">
 		<ul>
 			<li>Email: <input type="email" name="email" placeholder="Email"></li>
 			<li>Password: <input type="password" name="password" placeholder="***"></li>
 		</ul>
 		
-		{% with messages = get_flashed_messages()%}
+		{% with messages = get_flashed_messages(with_categories=true)%}
 			{% if messages %}
-				{% for message in messages %}
-					<p> {{ message }} </p>
+				{% for category, message in messages %}
+					{% if category == "success" %}
+						<p class="alert alert-success" role="alert">{{ message }}</p>
+					{% elif category == "user_error" %}
+						<p class="alert alert-danger" role="alert">{{ message }}</p>
+					{% elif category == "password_error" %}
+						<p class="alert alert-warning" role="alert">{{ message }}</p>
+					{% endif %}
 				{% endfor %}
 			{% endif %}
-
-
 		{% endwith %}
 		<input type="submit" value="Submit">
-	</form>
-	
-</body>
-</html>
+	</form> -->
+
+{% endblock %}

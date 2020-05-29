@@ -1,12 +1,6 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>Document</title>
-	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
-</head>
-<body>
+{% extends "base.html" %}
+
+{% block body %}
 
 	<p>
 		ID: {{ user.id_user }} <br>
@@ -15,10 +9,9 @@
 		Photo: {{ user.profile.photo }} <br><br>
 		<a href=" {{ url_for('delete', id_user=user.id_user) }} ">Deletar</a>
 	</p>
-	
+
 	<nav>
 		<a href="{{ url_for('index') }}">Index</a>
 	</nav>
-
-</body>
-</html>
+	
+{% endblock %}
