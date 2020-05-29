@@ -51,6 +51,14 @@ def delete(id_user):
 	db.session.commit()
 	return redirect(url_for('index'))
 
+@app.route("/register")
+def register():
+	return render_template("register.html")
+
+@app.route("/login")
+def login():
+	return render_template("login.html")	
+
 if __name__ == "__main__":
 	db.create_all()
 	app.run(debug=True)
