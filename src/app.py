@@ -1,9 +1,10 @@
-from flask import Flask, redirect, url_for, render_template, request
+from flask import Flask, redirect, url_for, render_template, request, flash
 from flask_sqlalchemy import SQLAlchemy
-from flask_login import LoginManager, UserMixin, login_required
-from werkzeug.security import generate_password_hash
+from flask_login import LoginManager, UserMixin, login_required, login_user
+from werkzeug.security import generate_password_hash, check_password_hash
 
 app = Flask(__name__)
+app.config["SECRET_KEY"] = "DontTellAnyone"
 app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///database.db"
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 
@@ -14,7 +15,7 @@ login_manager = LoginManager(app)
 def current_user(id_user):
 	return User.query.get(id_user)
 
-class User(db.Model):
+class User(db.Model, UserMixin):
 	__tablename__ = "users"
 	id_user = db.Column(db.Integer, primary_key=True)
 	name = db.Column(db.String(32), nullable=False)
@@ -22,10 +23,13 @@ class User(db.Model):
 	password = db.Column(db.String(255), nullable=False)
 	profile = db.relationship('Profile', backref='user', uselist=False)
 
+	def get_id(self):
+		return self.id_user
+
 	def __str__(self):
 		return f"{self.name}"
 
-class Profile(db.Model, UserMixin):
+class Profile(db.Model):
 	__tablename__ = "profiles"
 	id_profile = db.Column(db.Integer, primary_key=True)
 	photo = db.Column(db.Unicode(124), nullable=False)
@@ -41,7 +45,7 @@ def index():
 	return render_template("users.html", users=users)
 
 @app.route("/users/<int:id_user>")
-# @login_required
+@login_required
 def unique(id_user):
 	user = User.query.get(id_user)
 	return render_template("user.html", user=user)
@@ -62,12 +66,29 @@ def register():
 		user.password = generate_password_hash(request.form.get("password"))
 		db.session.add(user)
 		db.session.commit()
-		return redirect(url_for('index'))
+		return redirect(url_for('login'))
 
 	return render_template("register.html")
 
 @app.route("/login", methods=["GET", "POST"])
 def login():
+	if request.method == "POST":
+		email = request.form.get("email")
+		user = User.query.filter_by(email=email).first()
+		if not user:
+			print("not user")
+			flash("user not found!")
+			return redirect("")
+
+		password = request.form.get("password")
+		if not check_password_hash(user.password, password):
+			print("not pass")
+			flash("password incorrect!")
+			return redirect("")
+
+		login_user(user)
+		return redirect(url_for('index'))
+
 	return render_template("login.html")	
 
 if __name__ == "__main__":
