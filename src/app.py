@@ -1,4 +1,4 @@
-from flask import Flask, request
+from flask import Flask, request, Response
 
 app = Flask(__name__)
 
@@ -20,6 +20,13 @@ def posts(id_=None):
 	}
 	print(data)
 	return data	
+
+@app.route("/response")
+def response():
+	headers = {
+		"Content-Type": "text/html"
+	}
+	return Response("flask handle it automatically", status=200, headers=headers)
 
 if __name__ == "__main__":
 	app.run()
