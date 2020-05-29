@@ -19,7 +19,11 @@
 	<p>Users</p>
 	{% for user in users %}
 	<ul>
-		<li><a href="{{ url_for('unique', id_user=user.id_user) }}">{{ user.name }}</a></li>
+		{% if current_user.id_user == user.id_user %}
+			<li><a href="{{ url_for('unique', id_user=user.id_user) }}">{{ user.name }}</a></li>
+		{% else %}
+			<li>{{ user.name }}</li>
+		{% endif %}
 	</ul>
 	{% endfor %}
 	
