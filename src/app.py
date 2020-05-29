@@ -1,10 +1,17 @@
-from flask import Flask, request, redirect, url_for, render_template
+from flask import Flask, redirect, url_for, render_template
 from flask_sqlalchemy import SQLAlchemy
+from flask_login import LoginManager, UserMixin
 
 app = Flask(__name__)
 app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///database.db"
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
+
 db = SQLAlchemy(app)
+login_manager = LoginManager(app)
+
+@login_manager.user_loader
+def current_user(id_user):
+	return User.query.get(id_user)
 
 class User(db.Model):
 	__tablename__ = "users"
