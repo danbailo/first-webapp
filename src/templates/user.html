@@ -10,8 +10,8 @@
 	<p>
 		ID: {{ user.id_user }} <br>
 		Name: {{ user.name }} <br>
-		Email: {{ user.email }} <br><br>
-
+		Email: {{ user.email }} <br>
+		Photo: {{ user.profile.photo }} <br><br>
 		<a href=" {{ url_for('delete', id_user=user.id_user) }} ">Deletar</a>
 	</p>
 	
