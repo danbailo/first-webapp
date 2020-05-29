@@ -1,6 +1,7 @@
 from flask import Flask, redirect, url_for, render_template, request
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager, UserMixin, login_required
+from werkzeug.security import generate_password_hash
 
 app = Flask(__name__)
 app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///database.db"
@@ -40,7 +41,7 @@ def index():
 	return render_template("users.html", users=users)
 
 @app.route("/users/<int:id_user>")
-@login_required
+# @login_required
 def unique(id_user):
 	user = User.query.get(id_user)
 	return render_template("user.html", user=user)
@@ -58,7 +59,7 @@ def register():
 		user = User()
 		user.name = request.form.get("name")
 		user.email = request.form.get("email")
-		user.password = request.form.get("password")
+		user.password = generate_password_hash(request.form.get("password"))
 		db.session.add(user)
 		db.session.commit()
 		return redirect(url_for('index'))
