@@ -1,3 +1,5 @@
+#!/usr/bin/python3
+
 from flask import Flask, redirect, url_for, render_template, request, flash
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager, UserMixin, login_required, login_user, logout_user
@@ -40,9 +42,9 @@ class Profile(db.Model):
 
 
 @app.route("/")
-def index():
-	users = User.query.all()
-	return render_template("users.html", users=users)
+def users():
+	users_result = User.query.all()
+	return render_template("users.html", users=users_result)
 
 @app.route("/users/<int:id_user>")
 @login_required
@@ -55,7 +57,7 @@ def delete(id_user):
 	user = User.query.filter_by(id_user=id_user).first()
 	db.session.delete(user)
 	db.session.commit()
-	return redirect(url_for('index'))
+	return redirect(url_for('users'))
 
 @app.route("/register", methods=["GET", "POST"])
 def register():
@@ -66,7 +68,7 @@ def register():
 		user.password = generate_password_hash(request.form.get("password"))
 		db.session.add(user)
 		db.session.commit()
-		return redirect(url_for('index'))
+		return redirect(url_for('users'))
 
 	return render_template("register.html")
 
@@ -86,7 +88,7 @@ def login():
 
 		login_user(user)
 		flash("Login successfully!", "success")
-		return redirect(url_for('index'))
+		return redirect(url_for('users'))
 
 	return render_template("login.html")	
 
@@ -94,7 +96,7 @@ def login():
 @login_required
 def logout():
 	logout_user()
-	return redirect(url_for('index'))
+	return redirect(url_for('users'))
 
 if __name__ == "__main__":
 	db.create_all()
