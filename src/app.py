@@ -4,11 +4,15 @@ from flask import Flask, redirect, url_for, render_template, request, flash
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager, UserMixin, login_required, login_user, logout_user
 from werkzeug.security import generate_password_hash, check_password_hash
+import filters
 
 app = Flask(__name__, static_folder="../public")
 app.config["SECRET_KEY"] = "DontTellAnyone"
 app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///database.db"
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
+app.jinja_env.filters["format_date"] = filters.format_date
+app.jinja_env.filters["len"] = len
+
 
 db = SQLAlchemy(app)
 login_manager = LoginManager(app)
@@ -23,6 +27,7 @@ class User(db.Model, UserMixin):
 	name = db.Column(db.String(32), nullable=False)
 	email = db.Column(db.String(64), unique=True, nullable=False, index=True)
 	password = db.Column(db.String(255), nullable=False)
+	date_create = db.Column(db.DateTime, nullable=False)
 	profile = db.relationship('Profile', backref='user', uselist=False)
 
 	def get_id(self):
@@ -39,10 +44,6 @@ class Profile(db.Model):
 
 	def __str__(self):
 		return f"{self.name}"
-
-@app.context_processor
-def example():
-    return {"myexample": len}
 
 @app.route("/")
 def users():
@@ -69,6 +70,7 @@ def register():
 		user.name = request.form.get("name")
 		user.email = request.form.get("email")
 		user.password = generate_password_hash(request.form.get("password"))
+		user.date_create = datetime.now()
 		db.session.add(user)
 		db.session.commit()
 		return redirect(url_for('users'))
