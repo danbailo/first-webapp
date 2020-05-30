@@ -5,10 +5,10 @@
 {% block body %}
 
 	<ul class="list-group">
-		<li class="list-group-item">ID: {{ user.id_user }}</li>
-		<li class="list-group-item">Name: {{ user.name }}</li>
-		<li class="list-group-item">Email: {{ user.email }}</li>
-		<li class="list-group-item">Since: {{ user.date_create | format_date }}</li>
+		<li class="list-group-item">ID: {{ id }}</li>
+		<li class="list-group-item">Name: {{ name }}</li>
+		<li class="list-group-item">Email: {{ email }}</li>
+		<li class="list-group-item">Since: {{ date | format_date }}</li>
 		<!-- <li class="list-group-item">Photo: {{ user.profile.photo }}</li> -->
 	</ul>
 
