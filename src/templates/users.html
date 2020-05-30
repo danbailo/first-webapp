@@ -6,13 +6,15 @@
 
 	{% include "components/example.html" %}
 
+	<h5 class="modal-title my-3">Total users {{ myexample(users) }}</h5>
+
 	{% for user in users %}
 		<div class="list-group">
 			{% if current_user.id_user == user.id_user %}
-				<a class="list-group-item list-group-item-action active my-1" href="{{ url_for('unique', id_user=user.id_user) }}" >{{ user.name }}</a>
+				<a class="list-group-item list-group-item-action active my-1" href="{{ url_for('unique', id_user=user.id_user) }}" >{{ user.name | title }}</a>
 			{% else %}
 				<p class="list-group-item list-group-item-action disable my-1">
-					{{ user.name }}
+					{{ user.name | title}}
 				</p>
 			{% endif %}
 		</div>

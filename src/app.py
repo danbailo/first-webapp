@@ -40,6 +40,9 @@ class Profile(db.Model):
 	def __str__(self):
 		return f"{self.name}"
 
+@app.context_processor
+def example():
+    return {"myexample": len}
 
 @app.route("/")
 def users():
