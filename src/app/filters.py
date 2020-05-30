@@ -1,2 +1,2 @@
 def format_date(date):
-    return date.strftime("%m/%d/%Y")
+    return date.strftime("%d/%m/%Y")

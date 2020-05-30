@@ -39,7 +39,7 @@ def init_app(app):
             user.email = request.form.get("email")
             user.password =\
                 generate_password_hash(request.form.get("password"))
-            user.date_create = datetime.datetime.now()
+            user.date_create = datetime.now()
             db.session.add(user)
             db.session.commit()
             return redirect(url_for('users'))
