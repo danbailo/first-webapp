@@ -5,7 +5,7 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager, UserMixin
 from flask_login import login_required, login_user, logout_user
 from werkzeug.security import generate_password_hash, check_password_hash
-from datetime import datetime
+import datetime
 import filters
 
 app = Flask(__name__, static_folder="../public")
@@ -64,7 +64,7 @@ def users():
 
 @app.route("/users/<int:id_user>")
 @login_required
-def unique(id_user):
+def user(id_user):
     user = User.query.get(id_user)
     return render_template("user.html", user=user)
 
@@ -84,7 +84,7 @@ def register():
         user.name = request.form.get("name")
         user.email = request.form.get("email")
         user.password = generate_password_hash(request.form.get("password"))
-        user.date_create = datetime.now()
+        user.date_create = datetime.datetime.now()
         db.session.add(user)
         db.session.commit()
         return redirect(url_for('users'))
@@ -106,7 +106,9 @@ def login():
             flash("Password incorrect!", "warning")
             return redirect("")
 
-        login_user(user)
+        remember = request.form.get("remember")
+
+        login_user(user, remember=remember, duration=datetime.timedelta(days=7))
         flash("Login successfully!", "success")
         return redirect(url_for('users'))
 
