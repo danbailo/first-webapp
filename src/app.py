@@ -46,6 +46,10 @@ class Profile(db.Model):
 		return f"{self.name}"
 
 @app.route("/")
+def index():
+	return render_template("index.html")
+
+@app.route("/users")
 def users():
 	users_result = User.query.all()
 	return render_template("users.html", users=users_result)

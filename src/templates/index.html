@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+
+{% block body %}
+
+	{% include "components/components.html" %}
+
+	{% from "components/macros.html" import example %}
+	{{ example() }}
+
+{% endblock %}
