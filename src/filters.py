@@ -1,1 +1,2 @@
-format_date = lambda date: date.strftime("%m/%d/%Y")
+def format_date(date):
+    return date.strftime("%m/%d/%Y")
