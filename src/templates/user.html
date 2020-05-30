@@ -2,7 +2,7 @@
 
 {% block title %} {{ user.name }} {% endblock %}
 
-{% block body %}
+{% block content %}
 
 	{% set id = user.id_user %}
 	{% set name = user.name %}
@@ -16,7 +16,9 @@
 		<li class="list-group-item">Since: {{ date | format_date }}</li>
 	</ul>
 
-	<a class="btn btn-primary mt-1" href="{{ url_for('delete', id_user=user.id_user) }}" role="button">Delete me!</a>
+	<a class="btn btn-danger mt-1" href="{{ url_for('delete', id_user=user.id_user) }}" role="button">
+		<i class="fas fa-trash-alt"></i> Delete me!
+	</a>
 
 
 {% endblock %}

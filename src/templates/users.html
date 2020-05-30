@@ -2,9 +2,9 @@
 
 {% block title %} Users {% endblock %}
 
-{% block body %}
+{% block content %}
 
-	<h5 class="modal-title my-3">Total users {{ users | len }}</h5>
+	<h5 class="modal-title my-3">Total users: {{ users | len }}</h5>
 
 	{% for user in users %}
 		<div class="list-group">

@@ -2,7 +2,7 @@
 
 {% block title %} Login {% endblock %}
 
-{% block body %}
+{% block content %}
 
 	<form action="{{ url_for('login') }}" method="POST">
 		<div class="form-group">
@@ -27,7 +27,9 @@
 			{% endif %}
 		{% endwith %}
 				
-		<button type="submit" class="btn btn-primary">Submit</button>
+		<button type="submit" class="btn btn-info">
+			<i class="fas fa-sign-in-alt"></i> Submit
+		</button>
 	</form>
 
 {% endblock %}

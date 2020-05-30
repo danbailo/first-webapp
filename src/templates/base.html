@@ -5,40 +5,19 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>MyProject - {% block title %} {% endblock %}</title>
 	<link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
+	<link rel="stylesheet" href="{{ url_for('static', filename='css/all.min.css') }}">
 	<!-- url_for can be used to import static files -->
 </head>
 <body>
 
-	<div class="container">
+	{% include "components/navbar.html" %}
+	<div class="container mx-auto pt-3" style="width: 600px;">
 
-		<div class="mx-auto pt-5" style="width: 600px;">	
-			<ul class="nav nav-tabs mb-1">				
-				<li class="nav-item">					
-				  	<a class='nav-link {{ "active" if request.path == url_for("index") else "" }}' href="{{ url_for('index') }}">Index</a>
-				</li>
-				
-				<li class="nav-item">					
-					<a class='nav-link {{ "active" if request.path == url_for("users") else "" }}' href="{{ url_for('users') }}">Users</a>
-			  	</li>				
-				{% if not current_user.is_authenticated %}
-					<li class="nav-item">
-						<a class='nav-link {{ "active" if request.path == url_for("login") else "" }}' href="{{ url_for('login') }}">Login</a>
-					</li>
-					<li class="nav-item">
-						<a class='nav-link {{ "active" if request.path == url_for("register") else "" }}' href="{{ url_for('register') }}">Register</a>
-					</li>
-				{% else%}
-					<li class="nav-item">
-						<a class='nav-link {{ "active" if request.path == url_for("logout") else "" }}' href="{{ url_for('logout') }}">Logout</a>
-					</li>				
-				{% endif %}
-			</ul>		
 
-			{% block body %}
-			
-			{% endblock %}
-	
-		</div>
+		{% block content %}
+		
+		{% endblock %}
+
 	</div>
 	
 	<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
