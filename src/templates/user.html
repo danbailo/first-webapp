@@ -4,6 +4,11 @@
 
 {% block body %}
 
+	{% set id = user.id_user %}
+	{% set name = user.name %}
+	{% set email = user.email %}
+	{% set date = user.date_create %}
+
 	<ul class="list-group">
 		<li class="list-group-item">ID: {{ id }}</li>
 		<li class="list-group-item">Name: {{ name }}</li>
