@@ -1,36 +1,40 @@
-{% extends "layout.html" %}
+{% extends "base.html" %}
 
 {% block title %} Login {% endblock %}
 
 {% block content %}
 
-	{{ form.errors }}
+	<!-- {{ form.errors }} -->
 
-	<form action="{{ url_for('login') }}" method="POST">
+	{% from "components/macros.html" import submit_button, get_form_validate %}
+
+	<form class="needs-validation" novalidate action="{{ url_for('login') }}" method="POST">
 		{{ form.csrf_token }}
+
+		<!-- {{ form.errors }} -->
 		<div class="form-group">
-			<label for="exampleInputEmail1">Email address</label>
+			{{ form.email.label }}
 			{{ form.email(class_="form-control") }}
 			<small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+			{{ get_form_validate(form, "email") }}
 		</div>
 		
 		<div class="form-group">
-			<label for="exampleInputPassword1">Password</label>
+			{{ form.password.label }}
 			{{ form.password(class_="form-control") }}
+			{{ get_form_validate(form, "password") }}
+
 		</div>
 		
 		<div class="form-group form-check">
 			{{ form.remember(class_="form-check-input") }}
-			<label class="form-check-label" for="exampleCheck1">Remember me (7 days)</label>
-		</div>
-		
-		{{ form.submit(class_="btn btn-info", value='Submit', src="") }}
-		<!-- <button type="submit" class="btn btn-info">
-			<i class="fas fa-sign-in-alt"></i> Submit
-		</button> -->
+			{{ form.remember.label }}
 
-		{% include "components/login.html" %}
+		</div>
+
+		{{ submit_button("btn btn-info", "fas fa-sign-in-alt", "Submit") }}
+
+		{% include "components/notifications.html" %}
 
 	</form>
-
 {% endblock %}
