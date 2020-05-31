@@ -6,6 +6,8 @@ from werkzeug.security import check_password_hash, generate_password_hash
 
 from app import db
 from app.models import User
+from app.forms import LoginForm
+
 
 
 def init_app(app):
@@ -48,25 +50,25 @@ def init_app(app):
 
     @app.route("/login", methods=["GET", "POST"])
     def login():
-        if request.method == "POST":
-            email = request.form.get("email")
-            user = User.query.filter_by(email=email).first()
+        form = LoginForm()
+
+        if form.validate_on_submit():
+            user = User.query.filter_by(email=form.email.data).first()
             if not user:
                 flash("User not found!", "danger")
                 return redirect("")
 
-            password = request.form.get("password")
-            if not check_password_hash(user.password, password):
+            if not check_password_hash(user.password, form.password.data):
                 flash("Password incorrect!", "warning")
                 return redirect("")
 
-            remember = request.form.get("remember")
+            login_user(user, remember=form.remember.data,
+                       duration=timedelta(days=7))
 
-            login_user(user, remember=remember, duration=timedelta(days=7))
             flash("Login successfully!", "success")
             return redirect(url_for('users'))
 
-        return render_template("login.html")
+        return render_template("login.html", form=form)
 
     @app.route("/logout")
     @login_required
