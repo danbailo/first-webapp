@@ -1,5 +1,18 @@
-{% macro example(users) %}
+{% macro submit_button(button_class, button_icon, button_name) %}
+	
+	<button type="submit" class="{{button_class}}">
+		<i class="{{button_icon}}"></i> {{button_name}}
+	</button>
 
-	Macros works like a function in Python!
+{% endmacro %}
+
+{% macro get_form_validate(form, field) %}
+
+	<div class="valid-feedback">
+		Looks good!
+	</div>
+	<div class="invalid-feedback">
+		{{ form.errors.get(field)[0] }}
+	</div>		
 
 {% endmacro %}
