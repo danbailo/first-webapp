@@ -6,26 +6,24 @@ from wtforms.validators import DataRequired, Email, Length
 
 class LoginForm(FlaskForm):
     email = EmailField("Email", validators=[
-        DataRequired("This field is necessary!"),
+        DataRequired(),
         Email()
     ])
     password = PasswordField("Password", validators=[
-        DataRequired("This field is necessary!")
+        DataRequired()
     ])
     remember = BooleanField("Remember me (7 days)")
-    # submit = SubmitField("Submit")
 
 
 class RegisterForm(FlaskForm):
     name = StringField("Name", validators=[
-        DataRequired("This field is necessary!")
+        DataRequired()
     ])
     email = EmailField("Email", validators=[
-        DataRequired("This field is necessary!"),
+        DataRequired(),
         Email()
     ])
     password = PasswordField("Password", validators=[
-        DataRequired("This field is necessary!"),
-        Length(min=4)
+        DataRequired(),
+        Length(min=4, message="At least 4 characters are required!")
     ])
-    # submit = SubmitField("Submit")

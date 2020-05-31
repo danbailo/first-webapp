@@ -1,13 +1,12 @@
 from datetime import datetime, timedelta
 
-from flask import flash, redirect, render_template, request, url_for
+from flask import flash, redirect, render_template, url_for
 from flask_login import login_required, login_user, logout_user
 from werkzeug.security import check_password_hash, generate_password_hash
 
 from app import db
 from app.models import User
-from app.forms import LoginForm
-
+from app.forms import LoginForm, RegisterForm
 
 
 def init_app(app):
@@ -35,18 +34,19 @@ def init_app(app):
 
     @app.route("/register", methods=["GET", "POST"])
     def register():
-        if request.method == "POST":
+        form = RegisterForm()
+        if form.validate_on_submit():
             user = User()
-            user.name = request.form.get("name")
-            user.email = request.form.get("email")
-            user.password =\
-                generate_password_hash(request.form.get("password"))
+            user.name = form.name.data
+            user.email = form.email.data
+            user.password = generate_password_hash(form.password.data)
             user.date_create = datetime.now()
             db.session.add(user)
             db.session.commit()
-            return redirect(url_for('users'))
+            flash("User create with successfully!", "success")
+            return redirect("")
 
-        return render_template("register.html")
+        return render_template("register.html", form=form)
 
     @app.route("/login", methods=["GET", "POST"])
     def login():
