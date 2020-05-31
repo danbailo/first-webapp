@@ -4,14 +4,11 @@
 
 {% block content %}
 
-	<!-- {{ form.errors }} -->
-
 	{% from "components/macros.html" import submit_button, get_form_validate %}
 
-	<form class="needs-validation" novalidate action="{{ url_for('login') }}" method="POST">
+	<form action="{{ url_for('login') }}" method="POST" novalidate>
 		{{ form.csrf_token }}
 
-		<!-- {{ form.errors }} -->
 		<div class="form-group">
 			{{ form.email.label }}
 			{{ form.email(class_="form-control") }}

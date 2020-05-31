@@ -8,11 +8,6 @@
 
 {% macro get_form_validate(form, field) %}
 
-	<div class="valid-feedback">
-		Looks good!
-	</div>
-	<div class="invalid-feedback">
-		{{ form.errors.get(field)[0] }}
-	</div>		
+	<small class="text-danger">{{ form.errors.get(field)[0] }}</small>
 
 {% endmacro %}
