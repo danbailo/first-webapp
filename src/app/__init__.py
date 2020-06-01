@@ -1,11 +1,14 @@
 from flask import Flask
 from flask_login import LoginManager
 from flask_sqlalchemy import SQLAlchemy
+from flask_bootstrap import Bootstrap
+
 
 from app.utils import format_date
 
 db = SQLAlchemy()
 login_manager = LoginManager()
+bootstrap = Bootstrap()
 
 
 def create_app():
@@ -16,10 +19,13 @@ def create_app():
     app.jinja_env.filters["format_date"] = format_date
     app.jinja_env.filters["len"] = len
 
-    db.init_app(app)
-    login_manager.init_app(app)
+    db.init_app(app=app)
+    login_manager.init_app(app=app)
+    bootstrap.init_app(app=app)
 
     from app import views
-    views.init_app(app)
+    views.init_app(app=app)
+
+    db.create_all(app=app)
 
     return app
