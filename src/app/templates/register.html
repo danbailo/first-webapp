@@ -6,10 +6,7 @@
 
 {% block content %}
 
-{% from "components/macros.html" import submit_button, get_form_validate %}
-
 	{{ render_form(form, novalidate=True) }}
-
 	{% include "components/notifications.html" %}
 
 {% endblock %}

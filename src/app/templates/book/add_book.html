@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+
+{% from 'bootstrap/form.html' import render_form %}
+
+{% block title %} Add Book to user {% endblock %}
+
+{% block content %}
+
+    {{ render_form(form, novalidate=True) }}
+    {% include "components/notifications.html" %}
+
+{% endblock %}

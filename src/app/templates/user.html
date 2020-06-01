@@ -9,24 +9,58 @@
 	{% set email = user.email %}
 	{% set date = user.date_create %}
 
-	<ul class="list-group">
-		<h4>Info</h4>
-		<li class="list-group-item">ID: {{ id }}</li>
-		<li class="list-group-item">Name: {{ name }}</li>
-		<li class="list-group-item">Email: {{ email }}</li>
-		<li class="list-group-item">Since: {{ date | format_date }}</li>
-	</ul>
+	<a class="btn btn-success mt-1" href="{{ url_for('add_book_user', id=user.id_user) }}" role="button">
+		<i class="fas fa-plus"></i> Add book
+	</a>
 
-	<ul class="list-group my-3">
+	<!-- <div class="clearfix"></div> -->
+
+	<table class="table mt-3">
+		<thead>
+		  <tr>
+			<th scope="col">ID</th>
+			<th scope="col">Name</th>
+			<th scope="col">Email</th>
+			<th scope="col">Since</th>
+			<th>
+
+				<a class="btn btn-danger mt-1" href="{{ url_for('delete', id_user=user.id_user) }}" role="button">
+					<div class="fas fa-trash-alt"></div>
+				</a>
+
+			</th>
+		  </tr>
+		</thead>
+		<tbody>
+		  <tr>
+			<td>{{ id }}</td>
+			<td>{{ name }}</td>
+			<td>{{ email }}</td>
+			<td>{{ date | format_date }}</td>
+			<td>
+
+			</td>
+		  </tr>
+		</tbody>
+	  </table>
+
+
+	<!-- <ul class="list-group mt-2" style="width: 50%;">
+		<h4>Info</h4>
+		<li class="list-group-item"></li>
+		<li class="list-group-item"></li>
+		<li class="list-group-item"></li>
+		<li class="list-group-item"></li>
+	</ul> -->
+
+	<ul class="list-group my-2" style="width: 50%;">
 		<h4>Books</h4>
 		{% for book in user.books %}
 			<li class="list-group-item">Name: {{ book }}</li>
 		{% endfor %}
 	</ul>
 
-	<a class="btn btn-danger mt-1" href="{{ url_for('delete', id_user=user.id_user) }}" role="button">
-		<i class="fas fa-trash-alt"></i> Delete me!
-	</a>
+
 
 
 {% endblock %}

@@ -6,7 +6,7 @@ from werkzeug.security import check_password_hash, generate_password_hash
 
 from app import db
 from app.models import User, Book
-from app.forms import LoginForm, RegisterForm, BookForm
+from app.forms import LoginForm, RegisterForm, BookForm, UserBookForm
 
 def init_app(app):
     @app.route("/")
@@ -43,7 +43,7 @@ def init_app(app):
             db.session.add(user)
             db.session.commit()
             flash("User create with successfully!", "success")
-            return redirect(url_for('index'))
+            return redirect("")
 
         return render_template("register.html", form=form)
 
@@ -86,3 +86,8 @@ def init_app(app):
             flash("Book create with successfully!", "success")
             return redirect("")
         return render_template("book/add.html", form=form)
+
+    @app.route("/user/<int:id>/add_book", methods=["GET", "POST"])
+    def add_book_user(id):
+        form = UserBookForm()
+        return render_template("book/add_book.html", form=form)

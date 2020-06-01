@@ -1,10 +1,11 @@
 from flask_wtf import FlaskForm
 from markupsafe import Markup
 from wtforms.fields import (BooleanField, Field, PasswordField, StringField,
-                            SubmitField)
+                            SubmitField, SelectField)
 from wtforms.fields.html5 import EmailField
 from wtforms.validators import DataRequired, Email, Length
 from wtforms.widgets.core import HTMLString, escape, html_params
+from app.models import Book
 
 
 class InlineButtonWidget(object):
@@ -60,7 +61,7 @@ class RegisterForm(FlaskForm):
         DataRequired(),
         Length(min=4, message="At least 4 characters are required!")
     ])
-    text = Markup('<i class="fas fa-users"></i> Submit')
+    text = Markup('<i class="fas fa-user-plus"></i> Submit')
     submit = SubmitField(text, widget=InlineButtonWidget(class_="btn btn-success"))    
 
 
@@ -68,5 +69,19 @@ class BookForm(FlaskForm):
     name = StringField("Name", validators=[
         DataRequired()
     ])
-    text = Markup('<i class="fas fa-sign-in-alt"></i> Submit')
-    submit = SubmitField(text, widget=InlineButtonWidget(class_="btn btn-info"))
+    text = Markup('<i class="fas fa-plus"></i> Add')
+    submit = SubmitField(text, widget=InlineButtonWidget(class_="btn btn-success"))
+
+class UserBookForm(FlaskForm):
+    books = Book()
+    book = SelectField("Book",
+        coerce=int,
+    )
+    text = Markup('<i class="fas fa-plus"></i> Add')
+    submit = SubmitField(text, widget=InlineButtonWidget(class_="btn btn-success"))    
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.book.choices = [
+            (book.id_book, book.book) for book in Book().query.all()
+        ]
