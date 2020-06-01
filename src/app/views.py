@@ -1,7 +1,7 @@
 from datetime import datetime, timedelta
 
 from flask import flash, redirect, render_template, url_for
-from flask_login import login_required, login_user, logout_user
+from flask_login import login_required, login_user, logout_user, current_user
 from werkzeug.security import check_password_hash, generate_password_hash
 
 from app import db
@@ -90,4 +90,14 @@ def init_app(app):
     @app.route("/user/<int:id>/add_book", methods=["GET", "POST"])
     def add_book_user(id):
         form = UserBookForm()
+
+        if form.validate_on_submit():
+            book = Book.query.get(form.book.data)
+            current_user.books.append(book)
+            db.session.add(current_user)
+            db.session.commit()
+            flash("Book create with successfully!", "success")
+            return redirect(url_for("add_book_user", id=current_user.id_user))            
+
+
         return render_template("book/add_book.html", form=form)
