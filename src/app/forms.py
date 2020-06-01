@@ -44,6 +44,8 @@ class LoginForm(FlaskForm):
         DataRequired()
     ])
     remember = BooleanField("Remember me (7 days)")
+    text = Markup('<i class="fas fa-sign-in-alt"></i> Submit')
+    submit = SubmitField(text, widget=InlineButtonWidget(class_="btn btn-info"))
 
 
 class RegisterForm(FlaskForm):
@@ -58,6 +60,8 @@ class RegisterForm(FlaskForm):
         DataRequired(),
         Length(min=4, message="At least 4 characters are required!")
     ])
+    text = Markup('<i class="fas fa-users"></i> Submit')
+    submit = SubmitField(text, widget=InlineButtonWidget(class_="btn btn-success"))    
 
 
 class BookForm(FlaskForm):

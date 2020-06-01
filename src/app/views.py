@@ -43,7 +43,7 @@ def init_app(app):
             db.session.add(user)
             db.session.commit()
             flash("User create with successfully!", "success")
-            return redirect("")
+            return redirect(url_for('index'))
 
         return render_template("register.html", form=form)
 
