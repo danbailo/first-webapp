@@ -7,6 +7,10 @@
 {% block content %}
 
     {{ render_form(form, novalidate=True) }}
+    <a class="btn btn-info mt-1" href="{{ url_for('user', id_user=current_user.id_user) }}" role="button">
+        <i class="fas fa-long-arrow-alt-left"> Back</i>
+    </a>
+ 
     {% include "components/notifications.html" %}
 
 {% endblock %}
