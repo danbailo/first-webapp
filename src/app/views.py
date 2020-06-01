@@ -5,9 +5,8 @@ from flask_login import login_required, login_user, logout_user
 from werkzeug.security import check_password_hash, generate_password_hash
 
 from app import db
-from app.models import User
-from app.forms import LoginForm, RegisterForm
-
+from app.models import User, Book
+from app.forms import LoginForm, RegisterForm, BookForm
 
 def init_app(app):
     @app.route("/")
@@ -75,3 +74,15 @@ def init_app(app):
     def logout():
         logout_user()
         return redirect(url_for('users'))
+
+    @app.route("/book/add", methods=["GET", "POST"])
+    def add_book():
+        form = BookForm()
+        if form.validate_on_submit():
+            book = Book()
+            book.book = form.name.data
+            db.session.add(book)
+            db.session.commit()
+            flash("Book create with successfully!", "success")
+            return redirect("")
+        return render_template("book/add.html", form=form)
