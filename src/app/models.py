@@ -2,14 +2,14 @@ from app import db, login_manager
 from flask_login import UserMixin
 
 
-class Profile(db.Model):
-    __tablename__ = "profiles"
-    id_profile = db.Column(db.Integer, primary_key=True)
-    photo = db.Column(db.Unicode(124), nullable=False)
+class Book(db.Model):
+    __tablename__ = "books"
+    id_book = db.Column(db.Integer, primary_key=True)
+    book = db.Column(db.String(128), nullable=True)
     id_user = db.Column(db.Integer, db.ForeignKey("users.id_user"))
 
     def __str__(self):
-        return f"{self.name}"
+        return f"{self.book}"
 
 
 @login_manager.user_loader
@@ -24,7 +24,7 @@ class User(db.Model, UserMixin):
     email = db.Column(db.String(64), unique=True, nullable=False, index=True)
     password = db.Column(db.String(255), nullable=False)
     date_create = db.Column(db.DateTime, nullable=False)
-    profile = db.relationship('Profile', backref='user', uselist=False)
+    books = db.relationship('Book', backref='user')
 
     def get_id(self):
         return self.id_user
