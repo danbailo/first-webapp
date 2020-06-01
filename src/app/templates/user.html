@@ -10,10 +10,18 @@
 	{% set date = user.date_create %}
 
 	<ul class="list-group">
+		<h4>Info</h4>
 		<li class="list-group-item">ID: {{ id }}</li>
 		<li class="list-group-item">Name: {{ name }}</li>
 		<li class="list-group-item">Email: {{ email }}</li>
 		<li class="list-group-item">Since: {{ date | format_date }}</li>
+	</ul>
+
+	<ul class="list-group my-3">
+		<h4>Books</h4>
+		{% for book in user.books %}
+			<li class="list-group-item">Name: {{ book }}</li>
+		{% endfor %}
 	</ul>
 
 	<a class="btn btn-danger mt-1" href="{{ url_for('delete', id_user=user.id_user) }}" role="button">
