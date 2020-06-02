@@ -41,10 +41,10 @@ def login():
             return redirect("")
 
         login_user(user, remember=form.remember.data,
-                    duration=timedelta(days=7))
+                   duration=timedelta(days=7))
 
         flash("Login successfully!", "success")
-        return redirect(url_for('users'))
+        return redirect(url_for('user.users'))
 
     return render_template("login.html", form=form)
 
@@ -52,4 +52,4 @@ def login():
 @login_required
 def logout():
     logout_user()
-    return redirect(url_for('users'))
+    return redirect(url_for('user.users'))

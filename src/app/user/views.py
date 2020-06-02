@@ -7,6 +7,7 @@ from app.models import User
 from . import user
 
 
+@user.route("/")
 @user.route("/users")
 def users():
     users_result = User.query.all()
@@ -15,7 +16,7 @@ def users():
 
 @user.route("/users/<int:id_user>")
 @login_required
-def user(id_user):
+def user_info(id_user):
     user = User.query.get(id_user)
     return render_template("user.html", user=user)
 

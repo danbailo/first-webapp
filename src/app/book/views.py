@@ -7,6 +7,7 @@ from app.models import Book
 
 from . import book
 
+
 @book.route("/book/add", methods=["GET", "POST"])
 def add_book():
     form = BookForm()

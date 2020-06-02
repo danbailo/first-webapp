@@ -1,10 +1,6 @@
 <ul class="nav nav-tabs mx-auto pt-5" style="width: 600px;">				
     <li class="nav-item">					
-          <a class='nav-link {{ "active" if request.path == url_for("index") else "" }}' href="{{ url_for('index') }}">Index</a>
-    </li>
-    
-    <li class="nav-item">					
-        <a class='nav-link {{ "active" if request.path == url_for("users") else "" }}' href="{{ url_for('users') }}">Users</a>
+        <a class='nav-link {{ "active" if request.path == url_for("user.users") else "" }}' href="{{ url_for('user.users') }}">Users</a>
     </li>		
 
     <li class="nav-item">					
