@@ -18,7 +18,7 @@ def add_book():
         db.session.commit()
         flash("Book create with successfully!", "success")
         return redirect(url_for(".add_book"))
-    return render_template("book/add.html", form=form)
+    return render_template("add.html", form=form)
 
 @book.route("/user/<int:id>/add_book", methods=["GET", "POST"])
 def add_book_user(id):
@@ -32,4 +32,4 @@ def add_book_user(id):
         flash("Book create with successfully!", "success")
         return redirect(url_for(".add_book_user", id=current_user.id_user))            
 
-    return render_template("book/add_book.html", form=form)
+    return render_template("add_book.html", form=form)

@@ -1,14 +1,15 @@
 from datetime import datetime, timedelta
 
 from flask import flash, redirect, render_template, url_for
-from flask_login import current_user, login_required, login_user, logout_user
+from flask_login import login_required, login_user, logout_user
 from werkzeug.security import check_password_hash, generate_password_hash
 
 from app import db
 from app.forms import LoginForm, RegisterForm
-from app.models import Book, User
+from app.models import User
 
 from . import auth
+
 
 @auth.route("/register", methods=["GET", "POST"])
 def register():
@@ -25,6 +26,7 @@ def register():
         return redirect(url_for(".register"))
 
     return render_template("register.html", form=form)
+
 
 @auth.route("/login", methods=["GET", "POST"])
 def login():
@@ -47,6 +49,7 @@ def login():
         return redirect(url_for('user.users'))
 
     return render_template("login.html", form=form)
+
 
 @auth.route("/logout")
 @login_required
