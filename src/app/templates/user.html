@@ -9,7 +9,7 @@
 	{% set email = user.email %}
 	{% set date = user.date_create %}
 
-	<a class="btn btn-success mt-1 mb-3" href="{{ url_for('add_book_user', id=user.id_user) }}" role="button">
+	<a class="btn btn-success mt-1 mb-3" href="{{ url_for('book.add_book_user', id=user.id_user) }}" role="button">
 		<i class="fas fa-plus"></i> Add book
 	</a>
 
