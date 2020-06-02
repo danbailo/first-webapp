@@ -23,8 +23,8 @@ def create_app():
     login_manager.init_app(app=app)
     bootstrap.init_app(app=app)
 
-    from app import views
-    views.init_app(app=app)
+    from app import routes
+    routes.init_app(app=app)
 
     db.create_all(app=app)
 
