@@ -1,10 +1,21 @@
 import pytest
+import sys
+sys.path.append('../')
+from app import create_app
 
 
 @pytest.fixture
 def client():
-    return "my first test using pytest"
+    app = create_app()
+    app.config["TESTING"] = True
+    context = app.app_context()
+    context.push()
+
+    yield app.test_client()
+
+    context.pop()
 
 
 def test_client(client):
-    assert client == "my first test using pytesta"
+    request = client.get("/")
+    assert request.status_code == 200
