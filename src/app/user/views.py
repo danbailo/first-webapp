@@ -38,8 +38,10 @@ def confirm(id_user):
     if not user.confirmed:
         user.confirmed = True
         db.session.commit()
-        return "user confirmed!"
-    return "user already confirmed!"
+        flash("User confirmed!", "success")
+        return redirect(url_for('auth.login'))
+    flash("User already confirmed!", "warning")
+    return redirect(url_for('auth.login'))
 
 # @user.route("/email")
 # def email():
