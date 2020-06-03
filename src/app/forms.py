@@ -4,7 +4,7 @@ from wtforms.fields import (BooleanField, Field, PasswordField, StringField,
                             SubmitField, SelectField)
 from wtforms.fields.html5 import EmailField
 from wtforms.validators import DataRequired, Email, Length
-from wtforms.widgets.core import HTMLString, escape, html_params
+from wtforms.widgets.core import escape, html_params
 from app.models import Book
 
 
@@ -19,7 +19,7 @@ class InlineButtonWidget(object):
         params = html_params(title=title, **kwargs)
 
         html = '<button %s>%s</button>'
-        return HTMLString(html % (params, escape(field.label.text)))
+        return Markup(html % (params, escape(field.label.text)))
 
 
 class InlineButton(Field):
@@ -46,7 +46,8 @@ class LoginForm(FlaskForm):
     ])
     remember = BooleanField("Remember me (7 days)")
     text = Markup('<i class="fas fa-sign-in-alt"></i> Submit')
-    submit = SubmitField(text, widget=InlineButtonWidget(class_="btn btn-info"))
+    submit = SubmitField(text,
+                         widget=InlineButtonWidget(class_="btn btn-info"))
 
 
 class RegisterForm(FlaskForm):
@@ -62,7 +63,8 @@ class RegisterForm(FlaskForm):
         Length(min=4, message="At least 4 characters are required!")
     ])
     text = Markup('<i class="fas fa-user-plus"></i> Submit')
-    submit = SubmitField(text, widget=InlineButtonWidget(class_="btn btn-success"))    
+    submit = SubmitField(text,
+                         widget=InlineButtonWidget(class_="btn btn-success"))
 
 
 class BookForm(FlaskForm):
@@ -70,15 +72,17 @@ class BookForm(FlaskForm):
         DataRequired()
     ])
     text = Markup('<i class="fas fa-plus"></i> Add')
-    submit = SubmitField(text, widget=InlineButtonWidget(class_="btn btn-success"))
+    submit = SubmitField(text,
+                         widget=InlineButtonWidget(class_="btn btn-success"))
+
 
 class UserBookForm(FlaskForm):
     books = Book()
     book = SelectField("Book",
-        coerce=int,
-    )
+                       coerce=int)
     text = Markup('<i class="fas fa-plus"></i> Add')
-    submit = SubmitField(text, widget=InlineButtonWidget(class_="btn btn-success"))    
+    submit = SubmitField(text,
+                         widget=InlineButtonWidget(class_="btn btn-success"))
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)

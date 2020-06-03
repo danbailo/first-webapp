@@ -20,6 +20,7 @@ def add_book():
         return redirect(url_for(".add_book"))
     return render_template("add.html", form=form)
 
+
 @book.route("/user/<int:id>/add_book", methods=["GET", "POST"])
 def add_book_user(id):
     form = UserBookForm()

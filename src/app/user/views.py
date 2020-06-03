@@ -1,7 +1,8 @@
 from flask import redirect, render_template, url_for
 from flask_login import login_required
+from flask_mail import Message
 
-from app import db
+from app import db, mail
 from app.models import User
 
 from . import user
@@ -27,3 +28,14 @@ def delete(id_user):
     db.session.delete(user)
     db.session.commit()
     return redirect(url_for('.users'))
+
+# @user.route("/email")
+# def email():
+#     msg = Message(
+#         subject="hello world",
+#         sender='YOU <YOUR_EMAIL>',
+#         recipients=["YOUR_RECIPIENTS"],
+#         body="asdamsdkasmdsakjdmkas"
+#     )
+#     mail.send(msg)
+#     return "email sent!"
