@@ -29,10 +29,11 @@ class User(db.Model, UserMixin):
     name = db.Column(db.String(32), nullable=False)
     email = db.Column(db.String(64), unique=True, nullable=False, index=True)
     password = db.Column(db.String(255), nullable=False)
+    confirmed = db.Column(db.Boolean, default=False)
     date_create = db.Column(db.DateTime, nullable=False)
-    books = db.relationship("Book", secondary=books_in_users, lazy=True,\
-        backref=db.backref("users") #number of users that have a determinate book
-    )
+    # number of users that have a determinate book
+    books = db.relationship("Book", secondary=books_in_users, lazy=True,
+                            backref=db.backref("users"))
 
     def get_id(self):
         return self.id_user

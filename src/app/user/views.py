@@ -1,4 +1,6 @@
 from flask import redirect, render_template, url_for
+from flask import flash
+from flask import request
 from flask_login import login_required
 from flask_mail import Message
 
@@ -28,6 +30,16 @@ def delete(id_user):
     db.session.delete(user)
     db.session.commit()
     return redirect(url_for('.users'))
+
+
+@user.route("/confirm/<int:id_user>")
+def confirm(id_user):
+    user = User.query.filter_by(id_user=id_user).first()
+    if not user.confirmed:
+        user.confirmed = True
+        db.session.commit()
+        return "user confirmed!"
+    return "user already confirmed!"
 
 # @user.route("/email")
 # def email():
